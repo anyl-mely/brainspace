@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrainSpace - Learning Workspace</title>
+    <!-- Kết nối tới file CSS bên ngoài -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- 1. THANH ĐẦU TRANG (HEADER) -->
+    <header class="app-header">
+        <div class="brand-area">
+            <strong class="brand-logo">BrainSpace</strong>
+            <span class="path-title">| Lộ trình: Full-stack Web Development</span>
+        </div>
+        <div class="user-profile">
+            <span>Học viên: Minh Nguyen (Streak: 2 ngày 🔥)</span>
+        </div>
+    </header>
+
+    <!-- KHUNG CHỨA 3 CỘT CỦA WORKSPACE -->
+    <div class="workspace-container">
+
+        <!-- 2. CỘT TRÁI: ĐIỀU HƯỚNG BÀI HỌC -->
+        <nav class="lesson-sidebar" aria-label="Danh sách bài học">
+            <h2 class="section-heading">Chương 02: HTML & CSS</h2>
+            <ul class="lesson-list">
+                <li class="lesson-item active">
+                    <a href="#lesson-01">✅ Bài 02.1: Semantic HTML5 (Đang học)</a>
+                </li>
+                <li class="lesson-item">
+                    <a href="#lesson-02">🔒 Bài 02.2: CSS Box Model & Typography</a>
+                </li>
+                <li class="lesson-item">
+                    <a href="#lesson-03">🔒 Bài 02.3: Flexbox & Grid Layout</a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- 3. CỘT GIỮA: KHÔNG GIAN HỌC TẬP CHÍNH -->
+        <main class="lesson-main">
+            <article class="lesson-article">
+                <h1 class="lesson-title">Bài 02.1: Semantic HTML5 – Xây dựng bộ xương có ngữ nghĩa</h1>
+
+                <section class="content-box objectives-box">
+                    <h2>Mục tiêu bài học (Learning Objectives)</h2>
+                    <ul>
+                        <li>Hiểu sự khác biệt giữa thẻ ngữ nghĩa (Semantic) và thẻ vô nghĩa (div, span).</li>
+                        <li>Áp dụng đúng cấu trúc header, nav, main, article, section và aside.</li>
+                    </ul>
+                </section>
+
+                <section class="content-box">
+                    <h2>Nội dung cốt lõi</h2>
+                    <p>
+                        Semantic HTML giúp trình duyệt và chính lập trình viên đọc hiểu ngay vai trò của từng khối giao
+                        diện
+                        mà không cần đoán qua tên class.
+                    </p>
+                </section>
+            </article>
+        </main>
+
+        <!-- 4. CỘT PHẢI: KHUNG GHI CHÚ NGỮ CẢNH (Từ code của bạn!) -->
+        <aside class="notes-panel">
+            <h2 class="section-heading">Ghi chú bài học (Contextual Notes)</h2>
+            <form class="note-form">
+                <div class="form-group">
+                    <label for="note-title">Tiêu đề ghi chú:</label>
+                    <input type="text" id="note-title" class="form-control" placeholder="Nhập tiêu đề tóm tắt...">
+                </div>
+
+                <div class="form-group">
+                    <label for="note-content">Nội dung tự diễn giải:</label>
+                    <textarea id="note-content" class="form-control" rows="4"
+                        placeholder="Viết lại kiến thức theo cách hiểu của bạn..."></textarea>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="confusing-flag">
+                    <label for="confusing-flag">Đánh dấu chưa hiểu rõ (Cần ôn lại)</label>
+                </div>
+
+                <button type="submit" class="btn-primary">Lưu ghi chú</button>
+            </form>
+        </aside>
+
+    </div>
+
+</body>
+
+</html>

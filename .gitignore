@@ -1,0 +1,11 @@
+# Thư mục thư viện bên thứ ba (sẽ dùng từ Chương 05)
+node_modules/
+dist/
+
+# File chứa mật khẩu, JWT Secret và AI API Key (TUYỆT ĐỐI KHÔNG ĐẨY LÊN GITHUB)
+.env
+.env.local
+
+# File rác của hệ điều hành
+.DS_Store
+Thumbs.db
