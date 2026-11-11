@@ -1,0 +1,21 @@
+{
+  "lessons": [
+    {
+      "id": "les-01",
+      "title": "Semantic HTML5",
+      "isCompleted": true
+    },
+    {
+      "id": "les-02",
+      "title": "CSS Grid & Flexbox",
+      "isCompleted": true
+    },
+    {
+      "id": "les-03",
+      "title": "Asynchronous JS",
+      "isCompleted": false
+    }
+  ],
+  "notes": [],
+  "$schema": "./node_modules/json-server/schema.json"
+}
