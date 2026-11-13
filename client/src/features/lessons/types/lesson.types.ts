@@ -10,8 +10,10 @@ export interface Lesson {
     id: string;
     title: string;
     duration: number;
-    isCompleted: boolean;
-    objectives: string[];
+    order?: number;
     coreContent: string;
+    objectives: string[];
     quiz: LessonQuiz;
+    isCompleted: boolean;
+    notesCount?: number;
 }

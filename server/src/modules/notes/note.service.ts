@@ -28,15 +28,22 @@ export const noteService = {
     },
 
     createNote: async (dto: CreateNoteDto): Promise<NoteEntity> => {
-        const created = await prisma.note.create({
-            data: {
-                lessonId: dto.lessonId,
-                title: dto.title,
-                content: dto.content,
-                isConfusing: dto.isConfusing,
-            },
-        });
-        return mapToNoteEntity(created);
+        try {
+            const created = await prisma.note.create({
+                data: {
+                    lessonId: dto.lessonId,
+                    title: dto.title,
+                    content: dto.content,
+                    isConfusing: dto.isConfusing,
+                },
+            });
+            return mapToNoteEntity(created);
+        } catch (error) {
+            if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2003') {
+                throw new AppError(`Bài học với ID "${dto.lessonId}" không tồn tại trong hệ thống`, 400);
+            }
+            throw error;
+        }
     },
 
     updateNote: async (id: string, dto: UpdateNoteDto): Promise<NoteEntity> => {

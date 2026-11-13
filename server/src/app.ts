@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import noteRouter from './modules/notes/note.route';
 import { notFoundHandler, globalErrorHandler } from './middlewares/errorHandler';
+import lessonRouter from './modules/lessons/lesson.route';
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.get('/api/v1/health', (_req, res) => {
 
 // 4. Đăng ký các API Modules
 app.use('/api/v1/notes', noteRouter);
+app.use('/api/v1/lessons', lessonRouter);
 
 // 5. Xử lý đường dẫn 404 & Trạm thu gom lỗi tập trung đặt ở cuối cùng
 app.use(notFoundHandler);

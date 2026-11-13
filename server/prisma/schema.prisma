@@ -1,3 +1,4 @@
+// server/prisma/schema.prisma
 generator client {
   provider = "prisma-client-js"
 }
@@ -5,6 +6,24 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model Lesson {
+  id          String   @id @default(uuid())
+  title       String
+  duration    Int      @default(20)
+  order       Int      @default(1)
+  coreContent String   @map("core_content")
+  objectives  String[] @default([])
+  quiz        Json
+  isCompleted Boolean  @default(false) @map("is_completed")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  notes       Note[]
+
+  @@index([order])
+  @@map("lessons")
 }
 
 model Note {
@@ -15,6 +34,8 @@ model Note {
   isConfusing Boolean  @default(false) @map("is_confusing")
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
+
+  lesson      Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
 
   @@index([lessonId])
   @@map("notes")
