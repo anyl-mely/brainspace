@@ -1,16 +1,23 @@
 // server/src/modules/lessons/lesson.service.ts
-import { Prisma } from '@prisma/client';
 import { prisma } from '../../lib/prisma';
 import { AppError } from '../../middlewares/errorHandler';
 import type { LessonQuiz, LessonSummaryDto } from './lesson.schema';
 
 export const lessonService = {
-    getAllLessons: async (): Promise<LessonSummaryDto[]> => {
+    getAllLessons: async (userId: string): Promise<LessonSummaryDto[]> => {
         const lessons = await prisma.lesson.findMany({
             orderBy: { order: 'asc' },
             include: {
                 _count: {
-                    select: { notes: true },
+                    select: {
+                        notes: {
+                            where: { userId },
+                        },
+                    },
+                },
+                progresses: {
+                    where: { userId },
+                    select: { isCompleted: true },
                 },
             },
         });
@@ -23,17 +30,22 @@ export const lessonService = {
             coreContent: item.coreContent,
             objectives: item.objectives,
             quiz: item.quiz as unknown as LessonQuiz,
-            isCompleted: item.isCompleted,
+            isCompleted: Boolean(item.progresses[0]?.isCompleted),
             notesCount: item._count.notes,
         }));
     },
 
-    getLessonById: async (id: string) => {
+    getLessonById: async (userId: string, id: string) => {
         const lesson = await prisma.lesson.findUnique({
             where: { id },
             include: {
                 notes: {
+                    where: { userId },
                     orderBy: { createdAt: 'desc' },
+                },
+                progresses: {
+                    where: { userId },
+                    select: { isCompleted: true },
                 },
             },
         });
@@ -42,37 +54,64 @@ export const lessonService = {
             throw new AppError(`Không tìm thấy bài học với ID: ${id}`, 404);
         }
 
-        return lesson;
+        const { progresses, ...lessonData } = lesson;
+
+        return {
+            ...lessonData,
+            isCompleted: Boolean(progresses[0]?.isCompleted),
+        };
     },
 
-    updateCompletionStatus: async (id: string, isCompleted: boolean): Promise<LessonSummaryDto> => {
-        try {
-            const updated = await prisma.lesson.update({
-                where: { id },
-                data: { isCompleted },
-                include: {
-                    _count: {
-                        select: { notes: true },
+    updateCompletionStatus: async (
+        userId: string,
+        id: string,
+        isCompleted: boolean
+    ): Promise<LessonSummaryDto> => {
+        const existingLesson = await prisma.lesson.findUnique({
+            where: { id },
+            include: {
+                _count: {
+                    select: {
+                        notes: {
+                            where: { userId },
+                        },
                     },
                 },
-            });
+            },
+        });
 
-            return {
-                id: updated.id,
-                title: updated.title,
-                duration: updated.duration,
-                order: updated.order,
-                coreContent: updated.coreContent,
-                objectives: updated.objectives,
-                quiz: updated.quiz as unknown as LessonQuiz,
-                isCompleted: updated.isCompleted,
-                notesCount: updated._count.notes,
-            };
-        } catch (error) {
-            if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2025') {
-                throw new AppError(`Không tìm thấy bài học với ID: ${id}`, 404);
-            }
-            throw error;
+        if (!existingLesson) {
+            throw new AppError(`Không tìm thấy bài học với ID: ${id}`, 404);
         }
+
+        await prisma.lessonProgress.upsert({
+            where: {
+                userId_lessonId: {
+                    userId,
+                    lessonId: id,
+                },
+            },
+            update: {
+                isCompleted,
+                completedAt: new Date(),
+            },
+            create: {
+                userId,
+                lessonId: id,
+                isCompleted,
+            },
+        });
+
+        return {
+            id: existingLesson.id,
+            title: existingLesson.title,
+            duration: existingLesson.duration,
+            order: existingLesson.order,
+            coreContent: existingLesson.coreContent,
+            objectives: existingLesson.objectives,
+            quiz: existingLesson.quiz as unknown as LessonQuiz,
+            isCompleted,
+            notesCount: existingLesson._count.notes,
+        };
     },
 };

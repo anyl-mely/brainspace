@@ -20,17 +20,19 @@ function mapToNoteEntity(record: Note): NoteEntity {
 }
 
 export const noteService = {
-    getAllNotes: async (): Promise<NoteEntity[]> => {
+    getAllNotes: async (userId: string): Promise<NoteEntity[]> => {
         const records = await prisma.note.findMany({
+            where: { userId },
             orderBy: { createdAt: 'desc' },
         });
         return records.map(mapToNoteEntity);
     },
 
-    createNote: async (dto: CreateNoteDto): Promise<NoteEntity> => {
+    createNote: async (userId: string, dto: CreateNoteDto): Promise<NoteEntity> => {
         try {
             const created = await prisma.note.create({
                 data: {
+                    userId,
                     lessonId: dto.lessonId,
                     title: dto.title,
                     content: dto.content,
@@ -40,16 +42,20 @@ export const noteService = {
             return mapToNoteEntity(created);
         } catch (error) {
             if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2003') {
+                const field = String(error.meta?.field_name ?? '');
+                if (field.includes('user_id')) {
+                    throw new AppError('Tài khoản người dùng không tồn tại hoặc phiên đăng nhập không hợp lệ', 401);
+                }
                 throw new AppError(`Bài học với ID "${dto.lessonId}" không tồn tại trong hệ thống`, 400);
             }
             throw error;
         }
     },
 
-    updateNote: async (id: string, dto: UpdateNoteDto): Promise<NoteEntity> => {
+    updateNote: async (userId: string, id: string, dto: UpdateNoteDto): Promise<NoteEntity> => {
         try {
             const updated = await prisma.note.update({
-                where: { id },
+                where: { id, userId },
                 data: dto,
             });
             return mapToNoteEntity(updated);
@@ -61,10 +67,10 @@ export const noteService = {
         }
     },
 
-    deleteNote: async (id: string): Promise<void> => {
+    deleteNote: async (userId: string, id: string): Promise<void> => {
         try {
             await prisma.note.delete({
-                where: { id },
+                where: { id, userId },
             });
         } catch (error) {
             if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2025') {

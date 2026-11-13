@@ -4,6 +4,7 @@ import cors from 'cors';
 import noteRouter from './modules/notes/note.route';
 import { notFoundHandler, globalErrorHandler } from './middlewares/errorHandler';
 import lessonRouter from './modules/lessons/lesson.route';
+import authRouter from './modules/auth/auth.route';
 
 const app = express();
 
@@ -28,8 +29,10 @@ app.get('/api/v1/health', (_req, res) => {
 });
 
 // 4. Đăng ký các API Modules
-app.use('/api/v1/notes', noteRouter);
+
+app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/lessons', lessonRouter);
+app.use('/api/v1/notes', noteRouter);
 
 // 5. Xử lý đường dẫn 404 & Trạm thu gom lỗi tập trung đặt ở cuối cùng
 app.use(notFoundHandler);
