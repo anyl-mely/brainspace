@@ -16,6 +16,15 @@
       "isCompleted": false
     }
   ],
-  "notes": [],
+  "notes": [
+    {
+      "lessonId": "les-02",
+      "title": "test",
+      "content": "test",
+      "isConfusing": true,
+      "createdAt": "09:48",
+      "id": "LAY747ndrU8"
+    }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }

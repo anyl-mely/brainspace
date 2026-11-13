@@ -2,16 +2,14 @@
 import { useState } from 'react';
 import Header from './components/Header';
 import { LessonSidebar, LessonContent, MOCK_LESSONS } from './features/lessons';
+import { NotesPanel } from './features/notes';
 
 function App() {
-  // Quản lý danh sách bài học & bài học đang được chọn tại Component cha chung
   const [lessons, setLessons] = useState(MOCK_LESSONS);
   const [currentLessonId, setCurrentLessonId] = useState(MOCK_LESSONS[0].id);
 
-  // Derived State: Tìm đối tượng bài học khớp với currentLessonId
   const activeLesson = lessons.find((lesson) => lesson.id === currentLessonId);
 
-  // Cập nhật trạng thái hoàn thành bài học (Bất biến với .map)
   const handleToggleComplete = (lessonId) => {
     setLessons((prevLessons) =>
       prevLessons.map((lesson) =>
@@ -32,29 +30,18 @@ function App() {
           onSelectLesson={setCurrentLessonId}
         />
 
-        {/* Cột 2: Khung đọc bài học (truyền key={activeLesson.id} để tự động reset quiz khi đổi bài) */}
+        {/* Cột 2: Khung đọc bài học & Active Recall */}
         <LessonContent
           key={activeLesson?.id}
           lesson={activeLesson}
           onToggleComplete={handleToggleComplete}
         />
 
-        {/* Cột 3: Khu vực dành cho Feature Notes (Sẽ dựng ở Giai đoạn 3) */}
-        <aside
-          style={{
-            width: '360px',
-            flexShrink: 0,
-            padding: '20px',
-            backgroundColor: 'var(--bg-primary)'
-          }}
-        >
-          <h3 style={{ fontSize: '15px', color: 'var(--text-main)', marginBottom: '8px' }}>
-            Ghi chú bài học (Contextual Notes)
-          </h3>
-          <p style={{ fontSize: '13px', color: 'var(--text-muted)' }}>
-            Khu vực này sẽ được kết nối với REST API ở Giai đoạn 3.
-          </p>
-        </aside>
+        {/* Cột 3: Ghi chú ngữ cảnh kết nối REST API */}
+        <NotesPanel
+          lessonId={currentLessonId}
+          lessonTitle={activeLesson?.title}
+        />
       </main>
     </div>
   );
