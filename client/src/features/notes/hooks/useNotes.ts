@@ -1,13 +1,13 @@
-// client/src/features/notes/hooks/useNotes.js
+// client/src/features/notes/hooks/useNotes.ts
 import { useState, useEffect } from 'react';
 import { notesApi } from '../api/notesApi';
+import type { CreateNoteInput, Note } from '../types/note.types';
 
-export function useNotes(lessonId) {
-    const [allNotes, setAllNotes] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
+export function useNotes(lessonId: string) {
+    const [allNotes, setAllNotes] = useState<Note[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
 
-    // 1. READ: Nạp dữ liệu từ API khi Component Mount
     useEffect(() => {
         let isMounted = true;
 
@@ -21,7 +21,8 @@ export function useNotes(lessonId) {
                 }
             } catch (err) {
                 if (isMounted) {
-                    setError(err.message || 'Không thể kết nối tới máy chủ API.');
+                    const message = err instanceof Error ? err.message : 'Không thể kết nối tới máy chủ API.';
+                    setError(message);
                 }
             } finally {
                 if (isMounted) {
@@ -37,13 +38,11 @@ export function useNotes(lessonId) {
         };
     }, []);
 
-    // Derived State: Lọc các ghi chú thuộc bài học đang xem (giữ lại cả ghi chú cũ chưa gắn lessonId)
     const contextualNotes = allNotes.filter(
         (note) => note.lessonId === lessonId || !note.lessonId
     );
 
-    // 2. CREATE: Thêm ghi chú mới lên Server và cập nhật State
-    const addNote = async ({ title, content, isConfusing }) => {
+    const addNote = async ({ title, content, isConfusing }: CreateNoteInput): Promise<void> => {
         const payload = {
             lessonId,
             title,
@@ -59,8 +58,7 @@ export function useNotes(lessonId) {
         setAllNotes((prev) => [savedNote, ...prev]);
     };
 
-    // 3. UPDATE: Đảo trạng thái "Cần ôn lại" / "Đã hiểu rõ" trực tiếp trên thẻ
-    const toggleConfusing = async (noteId, currentStatus) => {
+    const toggleConfusing = async (noteId: string, currentStatus: boolean): Promise<void> => {
         const updatedNote = await notesApi.update(noteId, {
             isConfusing: !currentStatus,
         });
@@ -70,8 +68,7 @@ export function useNotes(lessonId) {
         );
     };
 
-    // 4. DELETE: Xóa ghi chú khỏi Server và loại bỏ khỏi danh sách hiển thị
-    const deleteNote = async (noteId) => {
+    const deleteNote = async (noteId: string): Promise<void> => {
         await notesApi.remove(noteId);
         setAllNotes((prev) => prev.filter((note) => note.id !== noteId));
     };

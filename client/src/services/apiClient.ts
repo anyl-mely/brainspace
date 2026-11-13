@@ -1,10 +1,10 @@
-// client/src/services/apiClient.js
+// client/src/services/apiClient.ts
 const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
-export async function apiClient(endpoint, options = {}) {
+export async function apiClient<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
     const url = `${BASE_URL}${endpoint}`;
 
-    const config = {
+    const config: RequestInit = {
         headers: {
             'Content-Type': 'application/json',
             ...options.headers,
@@ -18,7 +18,6 @@ export async function apiClient(endpoint, options = {}) {
         throw new Error(`Lỗi HTTP ${response.status}: Không thể xử lý yêu cầu tới ${endpoint}`);
     }
 
-    // Đọc dạng text trước để tránh lỗi parse JSON nếu API trả về body rỗng (204 No Content)
     const text = await response.text();
-    return text ? JSON.parse(text) : null;
+    return (text ? JSON.parse(text) : null) as T;
 }
