@@ -1,62 +1,69 @@
 // server/src/modules/notes/note.service.ts
-import { randomUUID } from 'crypto';
+import { Prisma, type Note } from '@prisma/client';
+import { prisma } from '../../lib/prisma';
 import { AppError } from '../../middlewares/errorHandler';
 import type { CreateNoteDto, NoteEntity, UpdateNoteDto } from './note.schema';
 
-// Kho lưu trữ tạm trên RAM (Sẽ được thay thế bằng PostgreSQL + Prisma ở Giai đoạn 6)
-let notesStore: NoteEntity[] = [
-    {
-        id: 'note-init-01',
-        lessonId: 'les-01',
-        title: 'Tư duy Semantic HTML',
-        content: 'Dùng <article> và <section> giúp cấu trúc trang mạch lạc thay vì lạm dụng <div>.',
-        isConfusing: false,
-        createdAt: '09:30',
-    },
-];
+// Ánh xạ bản ghi từ PostgreSQL sang đúng hợp đồng NoteEntity trả về cho Frontend
+function mapToNoteEntity(record: Note): NoteEntity {
+    return {
+        id: record.id,
+        lessonId: record.lessonId,
+        title: record.title,
+        content: record.content,
+        isConfusing: record.isConfusing,
+        createdAt: record.createdAt.toLocaleTimeString('vi-VN', {
+            hour: '2-digit',
+            minute: '2-digit',
+        }),
+    };
+}
 
 export const noteService = {
     getAllNotes: async (): Promise<NoteEntity[]> => {
-        return notesStore;
+        const records = await prisma.note.findMany({
+            orderBy: { createdAt: 'desc' },
+        });
+        return records.map(mapToNoteEntity);
     },
 
     createNote: async (dto: CreateNoteDto): Promise<NoteEntity> => {
-        const newNote: NoteEntity = {
-            id: randomUUID(),
-            lessonId: dto.lessonId,
-            title: dto.title,
-            content: dto.content,
-            isConfusing: dto.isConfusing,
-            createdAt:
-                dto.createdAt ||
-                new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }),
-        };
-
-        notesStore = [newNote, ...notesStore];
-        return newNote;
+        const created = await prisma.note.create({
+            data: {
+                lessonId: dto.lessonId,
+                title: dto.title,
+                content: dto.content,
+                isConfusing: dto.isConfusing,
+            },
+        });
+        return mapToNoteEntity(created);
     },
 
     updateNote: async (id: string, dto: UpdateNoteDto): Promise<NoteEntity> => {
-        const index = notesStore.findIndex((note) => note.id === id);
-        if (index === -1) {
-            throw new AppError(`Không tìm thấy ghi chú với ID: ${id}`, 404);
+        try {
+            const updated = await prisma.note.update({
+                where: { id },
+                data: dto,
+            });
+            return mapToNoteEntity(updated);
+        } catch (error) {
+            if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2025') {
+                throw new AppError(`Không tìm thấy ghi chú với ID: ${id}`, 404);
+            }
+            throw error;
         }
-
-        const updatedNote: NoteEntity = {
-            ...notesStore[index],
-            ...dto,
-        };
-
-        notesStore[index] = updatedNote;
-        return updatedNote;
     },
 
     deleteNote: async (id: string): Promise<void> => {
-        const exists = notesStore.some((note) => note.id === id);
-        if (!exists) {
-            throw new AppError(`Không tìm thấy ghi chú với ID: ${id}`, 404);
+        try {
+            await prisma.note.delete({
+                where: { id },
+            });
+        } catch (error) {
+            if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2025') {
+                throw new AppError(`Không tìm thấy ghi chú với ID: ${id}`, 404);
+            }
+            throw error;
         }
-
-        notesStore = notesStore.filter((note) => note.id !== id);
     },
 };
