@@ -1,0 +1,33 @@
+# Dependencies and builds
+node_modules/
+dist/
+build/
+coverage/
+.vite/
+*.tsbuildinfo
+
+# Secrets (keep templates only)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Logs, local data and temporary files
+*.log
+logs/
+.cache/
+tmp/
+temp/
+uploads/
+*.dump
+*.sqlite
+*.sqlite3
+
+# OS and IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Keep package lockfiles, schema and migrations tracked.
