@@ -78,7 +78,7 @@ These commands are **not runnable yet** in this starter kit. See the [Implementa
 - [API specification](docs/API_SPECIFICATION.md)
 - [Testing guide](docs/TESTING_GUIDE.md)
 - [Kickoff checklist](docs/KICKOFF_CHECKLIST.md)
-
+- [Milestone dependency analysis](docs/DEPENDENCY_ANALYSIS.md)
 ## Team
 
 A team of three developers. Domain assignments are proposed in the roadmap and will be confirmed at kickoff. Individual contributions are tracked through issues, commits and reviewed pull requests.
