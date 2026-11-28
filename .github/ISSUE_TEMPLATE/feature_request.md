@@ -1,27 +1,27 @@
 ---
-name: Feature or task
-about: Define a feature, documentation or setup task
+name: "Tính năng hoặc công việc"
+about: "Mô tả tính năng, tài liệu hoặc công việc thiết lập"
 title: ""
 labels: ""
 assignees: ""
 ---
 
-## Goal / user story
-As a [actor], I want [capability], so that [benefit]. For setup/docs, state the expected outcome.
+## Mục tiêu / câu chuyện người dùng
+Là [actor], tôi muốn [khả năng], để [lợi ích]. Với công việc thiết lập/tài liệu, nêu rõ đầu ra mong đợi.
 
-## Requirement ID
-<!-- e.g. PATH-01 or NFR-06 -->
+## Mã yêu cầu
+<!-- Ví dụ: PATH-01 hoặc NFR-06. -->
 
-## Scope
-<!-- In scope / out of scope -->
+## Phạm vi
+<!-- Trong phạm vi / ngoài phạm vi. -->
 
-## Acceptance criteria
-- [ ] 
-- [ ] 
+## Tiêu chí nghiệm thu
+- [ ]
+- [ ]
 
-## Dependencies / blockers
+## Phụ thuộc / phần việc đang chờ
 
-## Test plan
+## Kế hoạch kiểm thử
 
-## Assignment
-<!-- Set assignee, priority, module and milestone using GitHub fields. -->
+## Phân công
+<!-- Chọn assignee, priority, module và milestone bằng các trường tương ứng trên GitHub. -->

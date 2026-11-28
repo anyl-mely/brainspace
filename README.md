@@ -68,6 +68,8 @@ These commands are **not runnable yet** in this starter kit. See the [Implementa
 
 ## Documentation
 
+Development documentation and Issue/PR templates are maintained in Vietnamese for the team. Technical identifiers, commands and filenames retain their original form.
+
 - [Functional specification](FUNCTIONAL_SPECIFICATION.md)
 - [Implementation guide](IMPLEMENTATION_GUIDE.md)
 - [Contribution guidelines](CONTRIBUTING.md)
@@ -79,9 +81,10 @@ These commands are **not runnable yet** in this starter kit. See the [Implementa
 - [Testing guide](docs/TESTING_GUIDE.md)
 - [Kickoff checklist](docs/KICKOFF_CHECKLIST.md)
 - [Milestone dependency analysis](docs/DEPENDENCY_ANALYSIS.md)
+
 ## Team
 
-A team of three developers. Domain assignments are proposed in the roadmap and will be confirmed at kickoff. Individual contributions are tracked through issues, commits and reviewed pull requests.
+A team of three developers: [anyl-mely](https://github.com/anyl-mely) (Leader / Platform), [khongloan9811-arch](https://github.com/khongloan9811-arch) (AI & Knowledge), and [Quanndhe186402](https://github.com/Quanndhe186402) (Learning Intelligence). See the [Project Roadmap](docs/PROJECT_ROADMAP.md) for issue ownership and [Kickoff Issue #2](https://github.com/anyl-mely/brainspace/issues/2) for recorded team decisions. Individual contributions are tracked through issues, commits and independently reviewed pull requests.
 
 ## Development workflow
 

@@ -1,25 +1,25 @@
-# Project Roadmap – BrainSpace 1.0
+# Lộ trình dự án — BrainSpace 1.0
 
-**Baseline:** 25/11/2026–16/12/2026 (UTC+7) · Nhóm 3 người · 43 Issue P0 · 184 giờ công ước tính. Ngày 16/12 là ngày bàn giao; khoảng cách hai mốc là 21 ngày, gồm 22 ngày lịch nếu tính cả hai đầu. Mục tiêu sẵn sàng bàn giao ngày 15/12, dành 16/12 cho xác nhận cuối và release. Lịch này thay thế giả định 6 tuần; không thu hẹp phạm vi 1.0. Cả nhóm xác nhận capacity và acceptance tại kickoff.
+**Kế hoạch cơ sở (baseline):** 25/11/2026–16/12/2026 (UTC+7) · Nhóm 3 người · 43 Issue P0 · 184 giờ công ước tính. Ngày 16/12 là ngày bàn giao; khoảng cách hai mốc là 21 ngày, gồm 22 ngày lịch nếu tính cả hai đầu. Mục tiêu sẵn sàng bàn giao ngày 15/12, dành 16/12 cho xác nhận cuối và release. Lịch này thay thế giả định 6 tuần; không thu hẹp phạm vi 1.0. Cả nhóm xác nhận capacity và acceptance tại kickoff.
 
 Nguồn quản lý chính: [GitHub Issues](https://github.com/anyl-mely/brainspace/issues), [Milestones](https://github.com/anyl-mely/brainspace/milestones), [Development Board](https://github.com/users/anyl-mely/projects/1). Đây là baseline kế hoạch tại 27/11/2026, không phải báo cáo tiến độ triển khai. Nếu thay đổi lịch/estimate/owner, cập nhật Project và ghi lý do tại Issue; sửa baseline qua PR nếu cần. Các giờ dưới đây là estimate, không phải giờ thực tế.
 
-## 1. Ownership by domain
+## 1. Phân công theo lĩnh vực nghiệp vụ
 
 | Role | GitHub | Domain chính | Issues | Estimate |
 |---|---|---|---:|---:|
 | Dev A / Leader | @anyl-mely | Auth, RBAC, profile, admin, course, repo governance | 17 | 66h |
 | Dev B | @khongloan9811-arch | Library, notes, file processing, RAG/AIService | 12 | 55h |
 | Dev C | @Quanndhe186402 | Learning path, quiz, flashcards, analytics | 14 | 63h |
-| **Total** | | | **43** | **184h** |
+| **Tổng** | | | **43** | **184h** |
 
 Mỗi người thực hiện FE/BE/test/docs cho task được giao. Domain owner review các thay đổi hỗ trợ chéo: C làm enrollment/progress (#18), A làm shared AIService (#26), flashcard generation (#30) và dashboard (#34), B làm spaced repetition (#33). Giữ một assignee chính mỗi Issue; reviewer không đồng nghĩa assignee. Leader điều phối release, cả nhóm review chéo; không xem tự phê duyệt qua tài khoản phụ là review độc lập.
 
-## 2. Milestones và workload
+## 2. Các mốc nghiệm thu và khối lượng công việc
 
 Mọi ngày trong bảng là năm 2026. Cột A/B/C là giờ công theo assignee, không phải ngày công.
 
-| Milestone | Cửa sổ & due date (ngày cuối) | Issues | A / B / C (h) | Total (h) | Exit criteria |
+| Milestone | Khoảng thực hiện và hạn chót (ngày cuối) | Số Issue | A / B / C (h) | Tổng (h) | Điều kiện hoàn tất |
 |---|---|---:|---|---:|---|
 | M1 - Foundation | 25/11–27/11 | 11 | 10 / 8 / 9 | 27 | Spec/ERD/API baseline; UI map; FE/BE scaffold, DB migration/seed, auth skeleton, RAG spike, CI và deploy smoke. |
 | M2 - Core CRUD | 28/11–01/12 | 11 | 27 / 15 / 15 | 57 | Auth end-to-end, profile, admin/RBAC; path, course, enrollment/progress, document và note CRUD; search/filter/sort, phân quyền. |
@@ -27,15 +27,15 @@ Mọi ngày trong bảng là năm 2026. Cột A/B/C là giờ công theo assigne
 | M4 - Practice | 06/12–09/12 | 6 | 5 / 5 / 19 | 29 | Quiz snapshot và server scoring, history/retry, spaced repetition, due cards, analytics theo topic và đề xuất ôn tập. |
 | M5 - Integration | 10/12–12/12 | 4 | 9 / 5 / 5 | 19 | E2E, negative authorization, data integrity, RAG evaluation, UI error states và deployment smoke. |
 | M6 - Release | 13/12–16/12 | 4 | 5 / 4 / 3 | 12 | Regression, clean clone, tài liệu, demo/slides, nghiệm thu và tag/release v1.0.0. |
-| **Total** | **25/11–16/12** | **43** | **66 / 55 / 63** | **184** | Đạt release gate |
+| **Tổng** | **25/11–16/12** | **43** | **66 / 55 / 63** | **184** | Đạt release gate |
 
 Các Milestone là mốc nghiệm thu, không phải ranh giới cấm làm song song. Có thể chuẩn bị trước hoặc phát triển theo mock contract đã duyệt, nhưng không coi dependency đã hoàn thành khi chưa kiểm chứng. Giữ đủ 7 module P0 theo [Functional Specification](../FUNCTIONAL_SPECIFICATION.md), AI thực và public deployment. P1/P2 vẫn theo đặc tả; không đưa yêu cầu ngoài phạm vi vào P0.
 
-## 3. Issue index và baseline scheduling
+## 3. Danh mục Issue và lịch kế hoạch cơ sở
 
 PR [#1](https://github.com/anyl-mely/brainspace/pull/1) đã merge phần starter kit, không tính vào 43 Issue nghiệp vụ. Mã kế hoạch cố định khác với số GitHub Issue; liên kết dưới đây lấy từ metadata thực tế. Chi tiết AC, test references, dependencies và DoD ở từng Issue. Các liên kết dependency dưới đây là tham chiếu trong nội dung Issue, không khẳng định đã cấu hình quan hệ blocked-by native của GitHub.
 
-| Plan / Issue | Title | Owner | h | Start–Target (2026) | Dependencies |
+| Mã kế hoạch / Issue | Tiêu đề Issue trên GitHub | Owner | Giờ | Bắt đầu–Mục tiêu (2026) | Phụ thuộc |
 |---|---|:---:|---:|---|---|
 | S0-01 / [#2](https://github.com/anyl-mely/brainspace/issues/2) | docs: approve product scope and permissions | A | 1 | 25/11–27/11 | — |
 | S0-02 / [#3](https://github.com/anyl-mely/brainspace/issues/3) | docs: finalize database model | C | 2 | 25/11–27/11 | [#2](https://github.com/anyl-mely/brainspace/issues/2) |
@@ -89,7 +89,7 @@ PR [#1](https://github.com/anyl-mely/brainspace/pull/1) đã merge phần starte
 - 27/11 là deadline baseline M1. Các Issue còn mở tại lúc lập tài liệu không chứng minh chưa làm gì, cũng không chứng minh đã hoàn thành. Review evidence ngay tại kickoff; ghi blocker/remaining estimate, thống nhất hỗ trợ chéo và điều chỉnh ngày ở Project nếu cần. Không backdate kết quả hoặc đánh dấu Done khi chưa đạt AC.
 - Chốt Node/npm, PostgreSQL/Prisma/pgvector, storage, AI provider/model/dimension, quota và budget, cookie/CORS/CSRF theo [Implementation Guide](../IMPLEMENTATION_GUIDE.md) và kết quả spike. Không tự nhận các lựa chọn chưa kiểm chứng là quyết định cuối cùng.
 
-## 5. Issue management
+## 5. Quản lý Issue và tiến độ
 
 - Labels: `feature`, `bug`, `documentation`, `setup`, `testing`; `priority:P0/P1/P2`; `module:auth/path/course/library/ai/quiz/flashcard/analytics` (tên module/priority là từng label riêng). Issue có nhiều module khi cần.
 - Board: Backlog → Ready → In Progress → In Review → Done. Ready khi requirement/assignee/dependency rõ và điều kiện bắt đầu đã đáp ứng. Giữ WIP khoảng một task chính/người; board limit 3 In Progress và 3 In Review. Thay đổi Ready/In Progress/In Review do nhóm chủ động.
@@ -98,19 +98,19 @@ PR [#1](https://github.com/anyl-mely/brainspace/pull/1) đã merge phần starte
 - Definition of Done: AC đạt, test evidence thật (PASS/FAIL/BLOCKED/NOT RUN), cập nhật docs khi cần, PR review/merge nếu thay đổi code/docs, xác nhận tích hợp. Với issue không thay đổi repository, lưu bằng chứng nghiệm thu và đóng thủ công. Không đánh đồng PR merge với milestone hoàn thành.
 - Daily sync ngắn: đã làm, sẽ làm, blocker, dependency và remaining estimate. Kiểm tra workload/deadline từng ngày, ưu tiên đường găng, pair review và phân bổ hỗ trợ chéo khi cần. Phát sinh bug tạo Issue riêng, link nguồn và milestone thích hợp.
 
-## 6. Risks và scope gates
+## 6. Rủi ro và điều kiện kiểm soát phạm vi
 
-| Risk | Mitigation |
+| Rủi ro | Cách xử lý |
 |---|---|
-| Deadline / unequal load | M1 due 27/11; A có 27h M2, C có 19h M4; kiểm tra capacity thật, cập nhật remaining estimate, phối hợp hỗ trợ chéo và báo sớm blocker. 184h chưa phải cam kết chắc chắn. |
-| Contract mismatch | Contract first, mock DTO được review, shared topic IDs, migration được review; không reset shared DB. |
-| Provider quota/cost | Spike sớm; quota/capped context, timeout, fallback; giữ key ở server. |
-| AI hallucination | Grounded citations, no fabricated sources; evaluation theo Testing Guide. |
-| Private data exposure | RBAC + owner-scoped query, private storage, negative tests; không commit secret/dữ liệu cá nhân. |
-| Late deployment | Smoke từ M1, production integration M5, clean clone M6; HTTPS, backup, env theo host. |
-| Scope creep | Freeze P0 đã thống nhất; giữ P1/P2 đúng đặc tả, không tự cắt yêu cầu P0. |
+| Hạn chót / phân bổ công sức chưa đều | M1 due 27/11; A có 27h M2, C có 19h M4; kiểm tra capacity thật, cập nhật remaining estimate, phối hợp hỗ trợ chéo và báo sớm blocker. 184h chưa phải cam kết chắc chắn. |
+| Contract không khớp | Contract first, mock DTO được review, shared topic IDs, migration được review; không reset shared DB. |
+| Hạn mức / chi phí provider | Spike sớm; quota/capped context, timeout, fallback; giữ key ở server. |
+| AI tạo thông tin không có căn cứ | Grounded citations, no fabricated sources; evaluation theo Testing Guide. |
+| Lộ dữ liệu riêng tư | RBAC + owner-scoped query, private storage, negative tests; không commit secret/dữ liệu cá nhân. |
+| Triển khai môi trường chậm | Smoke từ M1, production integration M5, clean clone M6; HTTPS, backup, env theo host. |
+| Phát sinh ngoài phạm vi | Freeze P0 đã thống nhất; giữ P1/P2 đúng đặc tả, không tự cắt yêu cầu P0. |
 
-## 7. Release gate và demo
+## 7. Điều kiện phát hành và demo
 
 Theo [Functional Specification](../FUNCTIONAL_SPECIFICATION.md), [Testing Guide](TESTING_GUIDE.md) và [Kickoff Checklist](KICKOFF_CHECKLIST.md): đủ 7 module P0; test bắt buộc và kiểm tra authorization/ownership đạt, không còn blocker nghiêm trọng; RAG thực với citations, quota và lỗi đúng; public deployment hoạt động; clean clone/README được thành viên khác kiểm tra; tài liệu, ERD, env templates, demo và slide hoàn chỉnh. Ghi actual evidence, không công bố số đo chưa thực hiện. [#44](https://github.com/anyl-mely/brainspace/issues/44) chỉ phát hành v1.0.0 sau khi cả nhóm nghiệm thu.
 
