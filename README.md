@@ -81,6 +81,7 @@ Development documentation and Issue/PR templates are maintained in Vietnamese fo
 - [Testing guide](docs/TESTING_GUIDE.md)
 - [Kickoff checklist](docs/KICKOFF_CHECKLIST.md)
 - [Milestone dependency analysis](docs/DEPENDENCY_ANALYSIS.md)
+- [UI design and wireframes](docs/UI_DESIGN.md)
 
 ## Team
 
