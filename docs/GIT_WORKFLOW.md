@@ -1,8 +1,8 @@
-# Git & GitHub Workflow
+# Quy trình làm việc với Git và GitHub
 
-**Policy:** GitHub Flow + merge commit + tối thiểu 1 approval độc lập. Repo: `https://github.com/anyl-mely/brainspace`.
+**Quy ước:** GitHub Flow + merge commit + tối thiểu 1 approval độc lập. Repo: `https://github.com/anyl-mely/brainspace`.
 
-## 1. Leader setup (kiểm tra trên GitHub)
+## 1. Thiết lập của Leader — kiểm tra trên GitHub
 
 - Settings → Collaborators: 2 thành viên accept invitation; xác nhận họ có write access. Public chỉ cho phép đọc nếu chưa có quyền.
 - Settings → Branches: classic rule `main` (hoặc ruleset tương đương, không cần chồng cả hai). Require PR, 1 approval, dismiss stale approvals, conversation resolution, áp dụng cả admin/no bypass. Không allow force pushes/deletions. Tắt linear history để dùng merge commit. Chỉ bật required status checks sau khi CI chạy thành công và chọn đúng check.
@@ -10,7 +10,7 @@
 - Settings → About: description/topics; website để trống tới khi deploy.
 - Thiết lập trên web không được thực hiện bởi các file này. Kiểm tra bằng PR thử, không cố push thử vào main.
 
-## 2. Setup máy thành viên
+## 2. Thiết lập máy của thành viên
 
 ```bash
 git --version
@@ -24,13 +24,13 @@ Chạy config local trong repo đã clone; dùng email xác minh trên GitHub ho
 
 ## 3. Một task từ đầu đến cuối
 
-Ví dụ Issue #12. Bắt đầu khi working tree sạch; nếu đang có việc dở, commit vào đúng nhánh hoặc stash rồi mới chuyển.
+Ví dụ Issue #13 — Authentication; đoạn minh họa bên dưới chỉ triển khai phần đăng ký. Bắt đầu khi working tree sạch; nếu đang có việc dở, commit vào đúng nhánh hoặc stash rồi mới chuyển.
 
 ```bash
 git fetch origin --prune
 git switch main
 git pull --ff-only origin main
-git switch -c feature/12-user-registration
+git switch -c feature/13-session-authentication
 ```
 
 Viết code, test, kiểm tra:
@@ -38,14 +38,14 @@ Viết code, test, kiểm tra:
 ```bash
 git status
 git diff
-# Stage tung file da kiem tra (duong dan vi du)
+# Stage từng file đã kiểm tra (đường dẫn ví dụ)
 git add backend/src/modules/auth/auth.service.ts
 git diff --cached
 git commit -m "feat(auth): implement user registration"
-git push -u origin feature/12-user-registration
+git push -u origin feature/13-session-authentication
 ```
 
-Mở PR base `main`, compare nhánh task. Mô tả thay đổi, AC, test thực tế, ảnh UI nếu có; `Closes #12`; request review. Nếu CI chưa có, ghi rõ kiểm thử thủ công. Sửa theo feedback bằng commit mới rồi `git push`. Tác giả không tự approve. Reviewer kiểm tra security, contract, migration, test; approve khi đủ điều kiện. Leader hoặc người được giao merge dùng Create a merge commit.
+Mở PR base `main`, compare nhánh task. Mô tả thay đổi, AC, test thực tế, ảnh UI nếu có; dùng `Refs #13` vì ví dụ này chỉ là một phần của Issue; yêu cầu review. Chỉ dùng từ khóa tự đóng khi toàn bộ AC/DoD của Issue đã đạt. Nếu CI chưa có, ghi rõ kiểm thử thủ công. Sửa theo feedback bằng commit mới rồi `git push`. Tác giả không tự approve. Reviewer kiểm tra security, contract, migration, test; approve khi đủ điều kiện. Leader hoặc người được giao merge dùng Create a merge commit.
 
 ## 4. Cập nhật task khi main thay đổi
 
@@ -63,7 +63,7 @@ Thực hiện trên feature branch sạch. Nếu conflict: `git status`, mở t�
 git switch main
 git pull --ff-only origin main
 git fetch origin --prune
-git branch -d feature/12-user-registration
+git branch -d feature/13-session-authentication
 ```
 
 Chỉ dùng `-d` sau khi kiểm tra đã merge; nếu Git từ chối, kiểm tra lịch sử trước, không chuyển sang `-D` tùy tiện. Remote branch đã được auto-delete nếu cấu hình. `origin/HEAD` không phải feature branch.
@@ -82,11 +82,11 @@ Chỉ dùng `-d` sau khi kiểm tra đã merge; nếu Git từ chối, kiểm tr
 | Log hiện dấu `:` | Nhấn `q` hoặc dùng `git --no-pager log --oneline`. |
 | Secret lộ | Revoke/rotate ngay; báo Leader, kiểm tra logs, phối hợp cleanup lịch sử và bản sao. |
 
-## 7. Release
+## 7. Phát hành
 
 Chỉ tạo tag sau khi main đã pass release checklist, ví dụ `git tag -a v1.0.0 -m "BrainSpace 1.0"` rồi `git push origin v1.0.0`. Tạo GitHub Release, ghi chức năng đã làm và giới hạn đã biết. Không tag starter kit là v1.0 sản phẩm.
 
-## References
+## Tài liệu tham khảo
 
 - [GitHub Flow](https://docs.github.com/en/get-started/using-github/github-flow)
 - [Protected branches](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches)

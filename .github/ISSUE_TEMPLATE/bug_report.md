@@ -1,30 +1,30 @@
 ---
-name: Bug report
-about: Report a reproducible problem
+name: "Báo lỗi"
+about: "Ghi nhận lỗi có thể tái hiện"
 title: ""
 labels: ""
 assignees: ""
 ---
 
-## Problem
+## Mô tả vấn đề
 
-## Environment
-<!-- Browser, OS, branch/commit, dev/staging/public; no credentials. -->
+## Môi trường
+<!-- Trình duyệt, hệ điều hành, branch/commit, dev/staging/public; không ghi thông tin đăng nhập. -->
 
-## Steps to reproduce
-1. 
-2. 
-3. 
+## Các bước tái hiện
+1.
+2.
+3.
 
-## Expected behavior
+## Kết quả mong đợi
 
-## Actual behavior
+## Kết quả thực tế
 
-## Severity / impact
+## Mức độ nghiêm trọng / ảnh hưởng
 
-## Evidence
-<!-- Sanitized screenshot, request ID or logs. Never post private data or secrets. -->
+## Bằng chứng
+<!-- Ảnh chụp, request ID hoặc log đã loại bỏ dữ liệu riêng. Không đăng dữ liệu cá nhân hoặc secret. -->
 
-## Acceptance criteria
-- [ ] Reproduction fixed.
-- [ ] Relevant regression test or manual verification recorded.
+## Tiêu chí nghiệm thu
+- [ ] Đã sửa lỗi được tái hiện.
+- [ ] Đã ghi nhận kiểm thử hồi quy hoặc kiểm tra thủ công phù hợp.

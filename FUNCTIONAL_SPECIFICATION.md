@@ -1,6 +1,6 @@
-# BrainSpace – Functional Specification
+# BrainSpace — Đặc tả chức năng
 
-**Version:** 0.1 · **Status:** Draft for team review · **Target:** BrainSpace 1.0 · **Owner:** Team leader
+**Phiên bản:** 0.1 · **Trạng thái:** Dự thảo để nhóm review · **Mục tiêu:** BrainSpace 1.0 · **Phụ trách:** Leader
 
 Tài liệu mô tả hệ thống phải làm được gì. Các yêu cầu dưới đây là baseline đề xuất, chưa xác nhận đã triển khai. Khi thay đổi phạm vi, cập nhật tài liệu và Issue liên quan qua PR.
 
@@ -28,11 +28,11 @@ Guest là trạng thái chưa xác thực, không phải role trong DB. Tài kho
 | Kiểm duyệt khóa học / quản lý tài khoản, role | — | — | — | Có |
 | Xem usage AI tổng hợp, không đọc nội dung riêng tư | — | — | — | Có |
 
-## 3. Functional requirements
+## 3. Yêu cầu chức năng
 
 Mỗi dòng là một nhóm yêu cầu có ID để tạo Issue và trace test. Các ID không cần đổi khi sửa tên chức năng. Acceptance criteria (AC) là điều kiện nghiệm thu tối thiểu. Khi mở Issue, tách nhóm yêu cầu thành task đủ nhỏ.
 
-### M01 – Authentication & User Profile (P0)
+### M01 — Xác thực và hồ sơ người dùng (P0)
 
 | ID | Chức năng / actor | Acceptance criteria |
 |---|---|---|
@@ -43,7 +43,7 @@ Mỗi dòng là một nhóm yêu cầu có ID để tạo Issue và trace test. 
 | AUTH-05 | Admin quản lý user | Tìm kiếm, lọc role/status; cấp Instructor, khóa/mở khóa; không tự hạ quyền hoặc khóa admin cuối cùng; khóa thu hồi phiên |
 | AUTH-06 | Guard | Guest gọi API riêng nhận 401; người có role sai nhận 403; không lộ dữ liệu riêng của user khác |
 
-### M02 – Learning Path (P0)
+### M02 — Lộ trình học tập (P0)
 
 | ID | Chức năng | Acceptance criteria |
 |---|---|---|
@@ -53,7 +53,7 @@ Mỗi dòng là một nhóm yêu cầu có ID để tạo Issue và trace test. 
 | PATH-04 | Cập nhật tiến độ | NOT_STARTED / IN_PROGRESS / COMPLETED; tiến độ tính từ item; list/detail cập nhật sau refresh |
 | PATH-05 | Search/filter/sort | Tìm theo tiêu đề, lọc trạng thái hoặc trình độ; sắp xếp mới nhất; empty state đúng |
 
-### M03 – Course Management (P0, LMS tối giản)
+### M03 — Quản lý khóa học (P0, LMS tối giản)
 
 | ID | Chức năng / actor | Acceptance criteria |
 |---|---|---|
@@ -65,7 +65,7 @@ Mỗi dòng là một nhóm yêu cầu có ID để tạo Issue và trace test. 
 | COURSE-06 | Lesson progress | Đánh dấu hoàn thành/hoàn tác; mỗi enrollment + lesson một bản ghi; % tính bằng server |
 | COURSE-07 | Tiến độ học viên | Instructor chỉ xem dữ liệu tiến độ của người học trong course mình quản lý, không xem tài liệu/quiz riêng |
 
-### M04 – AI Tutor (P0)
+### M04 — Gia sư AI (P0)
 
 | ID | Chức năng | Acceptance criteria |
 |---|---|---|
@@ -75,7 +75,7 @@ Mỗi dòng là một nhóm yêu cầu có ID để tạo Issue và trace test. 
 | AI-04 | Lịch sử trò chuyện | Chỉ chủ sở hữu xem; có loading, empty, error, retry rõ ràng |
 | AI-05 | Quota và lỗi | Quota theo user; quá hạn mức 429; timeout/provider lỗi có thông báo, không lưu câu trả lời giả thành công |
 
-### M05 – Smart Notes & Knowledge Library (P0)
+### M05 — Ghi chú và thư viện kiến thức (P0)
 
 | ID | Chức năng | Acceptance criteria |
 |---|---|---|
@@ -86,7 +86,7 @@ Mỗi dòng là một nhóm yêu cầu có ID để tạo Issue và trace test. 
 | LIB-05 | Notes CRUD | Tạo, sửa, xóa ghi chú Markdown; có thể liên kết tài liệu của mình; không render HTML không an toàn |
 | LIB-06 | Xử lý tài liệu | UPLOADED → PROCESSING → READY hoặc FAILED; retry có kiểm soát; PDF scan báo không hỗ trợ |
 
-### M06 – Smart Quiz & Flashcards (P0)
+### M06 — Quiz và Flashcards (P0)
 
 | ID | Chức năng | Acceptance criteria |
 |---|---|---|
@@ -98,7 +98,7 @@ Mỗi dòng là một nhóm yêu cầu có ID để tạo Issue và trace test. 
 | FLASH-02 | Phiên ôn | Lật thẻ, chọn Again/Hard/Good/Easy; server lưu review và ngày đến hạn; không đếm trùng do double click |
 | FLASH-03 | Danh sách đến hạn | Truy vấn thẻ của user có due_at ≤ now; hiển thị trên Dashboard; sắp theo due_at |
 
-### M07 – Learning Analytics (P0)
+### M07 — Phân tích học tập (P0)
 
 | ID | Chức năng | Acceptance criteria |
 |---|---|---|
@@ -107,7 +107,7 @@ Mỗi dòng là một nhóm yêu cầu có ID để tạo Issue và trace test. 
 | ANA-03 | Đề xuất ôn tập | Ưu tiên thẻ đến hạn và topic accuracy thấp; liên kết tài liệu/quiz/thẻ hiện có của user; không tạo số liệu bằng AI |
 | ANA-04 | Lọc thời gian | Hỗ trợ 7/30 ngày cho dữ liệu hoạt động; thời gian học nếu có session đo được; không tự suy ra thời lượng từ việc mở trang |
 
-## 4. Use cases tiêu biểu
+## 4. Các tình huống sử dụng tiêu biểu
 
 ### UC-01 – Đăng ký và đăng nhập (AUTH-01/02)
 
@@ -145,7 +145,7 @@ Mỗi dòng là một nhóm yêu cầu có ID để tạo Issue và trace test. 
 - Alternative: không có thẻ đến hạn → empty state; request lặp cùng review key → không tạo review trùng.
 - Postcondition: thẻ được lập lịch, lịch sử lưu được.
 
-## 5. Business rules và validation
+## 5. Quy tắc nghiệp vụ và kiểm tra dữ liệu
 
 | Rule | Quy định baseline đề xuất |
 |---|---|
@@ -163,7 +163,7 @@ Mỗi dòng là một nhóm yêu cầu có ID để tạo Issue và trace test. 
 | BR-12 | Mỗi list có pagination và sort hợp lệ; default page 1, limit 20, max 100; lỗi FE/BE nhất quán. |
 | BR-13 | Tài khoản khóa không dùng protected API; không công khai email, file, lịch sử học; chỉ dùng dữ liệu demo có quyền sử dụng. |
 
-## 6. Non-functional requirements
+## 6. Yêu cầu phi chức năng
 
 | ID | Tiêu chí nghiệm thu |
 |---|---|
@@ -175,6 +175,6 @@ Mỗi dòng là một nhóm yêu cầu có ID để tạo Issue và trace test. 
 | NFR-06 | Clone sạch có thể cài/chạy theo README khi release; có demo public, không đưa secret lên Git. |
 | NFR-07 | Cả ba thành viên có contribution thực, feature branches, PR và review; tài liệu được cập nhật. |
 
-## 7. Release acceptance / traceability
+## 7. Nghiệm thu phát hành và đối chiếu yêu cầu
 
 Xem [Testing Guide](docs/TESTING_GUIDE.md) và [Kickoff checklist](docs/KICKOFF_CHECKLIST.md). Bản 1.0 chỉ được gọi là hoàn thành khi Auth, CRUD chính, list/detail, search/filter, validation, phân quyền và FE–BE–DB end-to-end chạy được; AI thực sự hoạt động; website public truy cập được; đủ tài liệu và demo. Các phần mở rộng không được làm chậm P0. Cả nhóm xác nhận các giới hạn và ưu tiên ở kickoff; nếu deadline ngắn, ghi thay đổi scope tại đây.
